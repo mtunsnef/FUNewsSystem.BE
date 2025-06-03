@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace FUNewsSystem.Services.DTOs.CategoryDto
+namespace FUNewsSystem.Services.DTOs.Request.CategoryDto
 {
     public class CreateUpdateCategoryDto
     {

@@ -1,6 +1,6 @@
 ﻿using AutoMapper;
 using FUNewsSystem.Domain.Models;
-using FUNewsSystem.Services.DTOs.CategoryDto;
+using FUNewsSystem.Services.DTOs.Request.CategoryDto;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,7 +13,6 @@ namespace FUNewsSystem.Services.AutoMapper
     {
         public CategoryProfile()
         {
-            CreateMap<Category, GetAllCategoryDto>();
             CreateMap<CreateUpdateCategoryDto, Category>();
             CreateMap<Category, CreateUpdateCategoryDto>();
         }

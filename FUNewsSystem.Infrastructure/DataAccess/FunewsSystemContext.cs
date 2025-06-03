@@ -1,16 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FUNewsSystem.Domain.Models;
 
-public partial class FunewsSystemApiContext : DbContext
+public partial class FunewsSystemContext : DbContext
 {
-    public FunewsSystemApiContext()
+    public FunewsSystemContext()
     {
     }
 
-    public FunewsSystemApiContext(DbContextOptions<FunewsSystemApiContext> options)
+    public FunewsSystemContext(DbContextOptions<FunewsSystemContext> options)
         : base(options)
     {
     }
@@ -19,14 +20,23 @@ public partial class FunewsSystemApiContext : DbContext
 
     public virtual DbSet<NewsArticle> NewsArticles { get; set; }
 
+    public virtual DbSet<Notification> Notifications { get; set; }
+
     public virtual DbSet<SystemAccount> SystemAccounts { get; set; }
 
     public virtual DbSet<Tag> Tags { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see https://go.microsoft.com/fwlink/?LinkId=723263.
-        => optionsBuilder.UseSqlServer("Server=(local);uid=sa;pwd=123123qwe;database=FUNewsSystem_API;TrustServerCertificate=true;Encrypt=false;");
-
+    {
+        optionsBuilder.UseSqlServer(GetConnectionString());
+    }
+    private string GetConnectionString()
+    {
+        IConfiguration configuration = new ConfigurationBuilder()
+                .SetBasePath(Directory.GetCurrentDirectory())
+                .AddJsonFile("appsettings.json", true, true).Build();
+        return configuration["ConnectionStrings:DefaultConnectionString"];
+    }
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Category>(entity =>
@@ -53,9 +63,9 @@ public partial class FunewsSystemApiContext : DbContext
             entity.Property(e => e.CategoryId).HasColumnName("CategoryID");
             entity.Property(e => e.CreatedById).HasColumnName("CreatedByID");
             entity.Property(e => e.CreatedDate).HasColumnType("datetime");
-            entity.Property(e => e.Headline).HasMaxLength(150);
+            entity.Property(e => e.Headline).HasMaxLength(1000);
+            entity.Property(e => e.ImageTitle).HasColumnType("text");
             entity.Property(e => e.ModifiedDate).HasColumnType("datetime");
-            entity.Property(e => e.NewsContent).HasMaxLength(4000);
             entity.Property(e => e.NewsSource).HasMaxLength(400);
             entity.Property(e => e.NewsTitle).HasMaxLength(400);
             entity.Property(e => e.UpdatedById).HasColumnName("UpdatedByID");
@@ -90,6 +100,22 @@ public partial class FunewsSystemApiContext : DbContext
                             .HasColumnName("NewsArticleID");
                         j.IndexerProperty<int>("TagId").HasColumnName("TagID");
                     });
+        });
+
+        modelBuilder.Entity<Notification>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__Notifica__3214EC0785981FD3");
+
+            entity.Property(e => e.CreatedAt)
+                .HasDefaultValueSql("(getdate())")
+                .HasColumnType("datetime");
+            entity.Property(e => e.IsRead).HasDefaultValue(false);
+            entity.Property(e => e.Link).IsUnicode(false);
+            entity.Property(e => e.Message).HasMaxLength(500);
+
+            entity.HasOne(d => d.User).WithMany(p => p.Notifications)
+                .HasForeignKey(d => d.UserId)
+                .HasConstraintName("FK__Notificat__UserI__6D0D32F4");
         });
 
         modelBuilder.Entity<SystemAccount>(entity =>

@@ -1,11 +1,9 @@
 ﻿using AutoMapper;
-using AutoMapper.QueryableExtensions;
 using FUNewsSystem.Domain.Exceptions.Http;
 using FUNewsSystem.Domain.Models;
 using FUNewsSystem.Infrastructure.Repositories.Categories;
-using FUNewsSystem.Services.DTOs.CategoryDto;
+using FUNewsSystem.Services.DTOs.Request.CategoryDto;
 using FUNewsSystem.Services.DTOs.Response;
-using System.Net;
 
 namespace FUNewsSystem.Services.Services.Categories
 {
@@ -34,8 +32,10 @@ namespace FUNewsSystem.Services.Services.Categories
             var category = _mapper.Map<Category>(dto);
             _categoryRepository.Add(category);
             await _categoryRepository.SaveAsync();
-            return ApiResponseDto<string>.Success("Category created successfully.");
+
+            return ApiResponseDto<string>.SuccessResponse("Category created successfully.");
         }
+
 
         public async Task<ApiResponseDto<string>> UpdateAsync(short id, CreateUpdateCategoryDto dto)
         {
@@ -47,18 +47,9 @@ namespace FUNewsSystem.Services.Services.Categories
             _categoryRepository.Update(category);
             await _categoryRepository.SaveAsync();
 
-            return ApiResponseDto<string>.Success("Category updated successfully.");
+            return ApiResponseDto<string>.SuccessResponse("Category updated successfully.");
         }
 
-        public async Task<ApiResponseDto<GetAllCategoryDto>> GetByIdAsync(short id)
-        {
-            var category = await _categoryRepository.GetByIdAsync(id);
-            if (category == null)
-                throw new NotFoundException($"Category with Id {id} not found.");
-
-            var dto = _mapper.Map<GetAllCategoryDto>(category);
-            return ApiResponseDto<GetAllCategoryDto>.Success(dto);
-        }
         public async Task<ApiResponseDto<string>> DeleteAsync(short id)
         {
             var category = await _categoryRepository.GetByIdAsync(id);
@@ -68,8 +59,18 @@ namespace FUNewsSystem.Services.Services.Categories
             _categoryRepository.Delete(category);
             await _categoryRepository.SaveAsync();
 
-            return ApiResponseDto<string>.Success("Category deleted successfully.");
+            return ApiResponseDto<string>.SuccessResponse("Category deleted successfully.");
         }
+
+        public Category GetById(short id)
+        {
+            var category = _categoryRepository.GetById(id);
+            if (category == null)
+                throw new NotFoundException($"Category with Id {id} not found.");
+
+            return category;
+        }
+
 
     }
 }
