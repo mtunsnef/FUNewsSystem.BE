@@ -29,6 +29,11 @@ namespace FUNewsSystem.Infrastructure.Repositories
             return await _dbSet.FindAsync(id);
         }
 
+        public virtual TEntity? GetById(object id)
+        {
+            return _dbSet.Find(id);
+        }
+
         public virtual async Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate)
         {
             return await _dbSet.Where(predicate).ToListAsync();

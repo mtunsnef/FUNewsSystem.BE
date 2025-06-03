@@ -17,6 +17,8 @@ public partial class NewsArticle
 
     public string? NewsSource { get; set; }
 
+    public string? ImageTitle { get; set; }
+
     public short? CategoryId { get; set; }
 
     public bool? NewsStatus { get; set; }

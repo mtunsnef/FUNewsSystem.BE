@@ -11,6 +11,7 @@ namespace FUNewsSystem.Infrastructure.Repositories
     {
         IQueryable<TEntity> GetAll();
         Task<TEntity?> GetByIdAsync(object id);
+        TEntity? GetById(object id);
         Task<IEnumerable<TEntity>> FindAsync(Expression<Func<TEntity, bool>> predicate);
         void Add(TEntity entity);
         void Delete(TEntity entity);
