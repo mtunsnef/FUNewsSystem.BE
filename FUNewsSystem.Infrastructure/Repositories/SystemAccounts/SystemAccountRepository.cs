@@ -1,0 +1,25 @@
+﻿using FUNewsSystem.Domain.Models;
+using FUNewsSystem.Infrastructure.Repositories.NewsArticles;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace FUNewsSystem.Infrastructure.Repositories.SystemAccounts
+{
+    public class SystemAccountRepository : RepositoryBase<SystemAccount>, ISystemAccountRepository
+    {
+        public SystemAccountRepository(FunewsSystemContext context) : base(context)
+        {
+        }
+
+        public async Task<SystemAccount?> GetAccountByEmail(string email)
+        {
+            var appUser = await _dbSet.FirstOrDefaultAsync(u => u.AccountEmail == email);
+
+            return appUser;
+        }
+    }
+}

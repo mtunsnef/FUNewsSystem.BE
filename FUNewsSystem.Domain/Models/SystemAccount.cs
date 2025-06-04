@@ -16,4 +16,6 @@ public partial class SystemAccount
     public string? AccountPassword { get; set; }
 
     public virtual ICollection<NewsArticle> NewsArticles { get; set; } = new List<NewsArticle>();
+
+    public virtual ICollection<Notification> Notifications { get; set; } = new List<Notification>();
 }
