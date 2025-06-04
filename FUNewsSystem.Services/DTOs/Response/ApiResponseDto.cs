@@ -9,20 +9,25 @@ namespace FUNewsSystem.Services.DTOs.Response
 {
     public class ApiResponseDto<T>
     {
+        public bool Success { get; set; } 
         public int StatusCode { get; set; }
-        public string Message { get; set; }
         public T Data { get; set; }
 
-        public ApiResponseDto(string message, T data, int statusCode = (int)HttpStatusCode.OK)
+        public ApiResponseDto(bool success,T data, int statusCode = (int)HttpStatusCode.OK)
         {
-            Message = message;
+            Success = success;
             Data = data;
             StatusCode = statusCode;
         }
 
-        public static ApiResponseDto<T> Success(T data, string message = "Success")
+        public static ApiResponseDto<T> SuccessResponse(T data)
         {
-            return new ApiResponseDto<T>(message, data);
+            return new ApiResponseDto<T>(true, data);
+        }
+
+        public static ApiResponseDto<T> FailResponse(int statusCode = (int)HttpStatusCode.BadRequest)
+        {
+            return new ApiResponseDto<T>(false, default, statusCode);
         }
     }
 
