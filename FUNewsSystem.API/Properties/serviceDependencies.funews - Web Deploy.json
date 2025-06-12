@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "apis1": {
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourceGroups/[parameters('resourceGroupName')]/providers/Microsoft.ApiManagement/service/fuapi/apis/FUNewsAPI",
+      "type": "apis.azure"
+    },
+    "mssql2": {
+      "secretStore": "AzureAppSettings",
+      "resourceId": "/subscriptions/[parameters('subscriptionId')]/resourcegroups/[parameters('resourceGroupName')]/providers/Microsoft.Sql/servers/funewssystemapidbserver/databases/FUNewsSystem.API_db",
+      "type": "mssql.azure",
+      "connectionId": "ConnectionStrings:FUNewsConnection"
+    }
+  }
+}
