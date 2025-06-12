@@ -5,7 +5,7 @@ namespace FUNewsSystem.Infrastructure.Repositories.Categories
 {
     public class CategoryRepository : RepositoryBase<Category>, ICategoryRepository
     {
-        public CategoryRepository(FunewsSystemContext context) : base(context)
+        public CategoryRepository(FunewsSystemApiDbContext context) : base(context)
         { }
         //public override IQueryable<Category> GetAll()
         //{
