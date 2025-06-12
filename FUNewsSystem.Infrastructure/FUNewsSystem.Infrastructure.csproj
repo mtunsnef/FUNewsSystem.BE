@@ -14,4 +14,8 @@
     <ProjectReference Include="..\FUNewsSystem.Domain\FUNewsSystem.Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataAccess\" />
+  </ItemGroup>
+
 </Project>

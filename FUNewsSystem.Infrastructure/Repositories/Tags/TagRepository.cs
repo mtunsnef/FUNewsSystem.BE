@@ -10,7 +10,7 @@ namespace FUNewsSystem.Infrastructure.Repositories.Tags
 {
     public class TagRepository : RepositoryBase<Tag>, ITagRepository
     {
-        public TagRepository(FunewsSystemContext context) : base(context)
+        public TagRepository(FunewsSystemApiDbContext context) : base(context)
         {
         }
     }

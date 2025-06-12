@@ -10,7 +10,7 @@ namespace FUNewsSystem.Infrastructure.Repositories.NewsArticles
 {
     public class NewsArticleRepository : RepositoryBase<NewsArticle>, INewsArticleRepository
     {
-        public NewsArticleRepository(FunewsSystemContext context) : base(context)
+        public NewsArticleRepository(FunewsSystemApiDbContext context) : base(context)
         {
         }
     }

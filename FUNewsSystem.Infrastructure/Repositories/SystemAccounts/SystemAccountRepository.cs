@@ -11,7 +11,7 @@ namespace FUNewsSystem.Infrastructure.Repositories.SystemAccounts
 {
     public class SystemAccountRepository : RepositoryBase<SystemAccount>, ISystemAccountRepository
     {
-        public SystemAccountRepository(FunewsSystemContext context) : base(context)
+        public SystemAccountRepository(FunewsSystemApiDbContext context) : base(context)
         {
         }
 
